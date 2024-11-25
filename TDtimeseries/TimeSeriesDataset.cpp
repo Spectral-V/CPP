@@ -1,10 +1,30 @@
+//
+// Created by victor murris on 20/11/2024.
+//
 #include "TimeSeriesDataset.h"
 
-// Constructeur
+
+/**
+ * Constructor for the TimeSeriesDataset class.
+ *
+ * @param znormalize Indicates whether the time series should be z-normalized.
+ * @param isTrain Indicates whether this dataset is a training dataset.
+ * @return A new instance of TimeSeriesDataset.
+ */
 TimeSeriesDataset::TimeSeriesDataset(bool znormalize, bool isTrain)
     : znormalize(znormalize), isTrain(isTrain), maxLength(0), numberOfSamples(0) {}
 
-// Méthode privée : normalisation Z d'une série temporelle
+
+/**
+ * Normalizes the given time series using z-normalization.
+ * The z-normalization process involves subtracting the mean of the series
+ * and dividing by the standard deviation, resulting in a series with zero mean
+ * and unit variance.
+ *
+ * @param series A reference to the time series to be normalized.
+ *               The series is modified in place.
+ * @throw std::runtime_error if the standard deviation of the series is zero.
+ */
 void TimeSeriesDataset::zNormalizeSeries(std::vector<double>& series) {
     double sum = 0.0, sumSq = 0.0;
 
@@ -26,55 +46,75 @@ void TimeSeriesDataset::zNormalizeSeries(std::vector<double>& series) {
     }
 }
 
-// Ajout d'une série temporelle avec label (train)
+/**
+ * Adds a time series to the dataset, optionally normalizing it, and assigns it a label.
+ *
+ * @param series The time series data to be added, represented as a vector of doubles.
+ * @param label The label associated with the time series, used for classification purposes.
+ */
 void TimeSeriesDataset::addTimeSeries(const std::vector<double>& series, int label) {
     std::vector<double> seriesCopy = series;
 
-    // Normalisation Z si activée
     if (znormalize) {
         zNormalizeSeries(seriesCopy);
     }
 
-    // Ajout au dataset
     data.push_back(seriesCopy);
     labels.push_back(label);
 
-    // Mise à jour des métadonnées
     if (series.size() > static_cast<size_t>(maxLength)) {
         maxLength = series.size();
     }
     numberOfSamples++;
 }
 
-// Ajout d'une série temporelle sans label (test)
+/**
+ * Adds a time series to the dataset.
+ *
+ * @param series A vector of doubles representing the time series to be added.
+ *               If znormalize is true, the series will be z-normalized before being added.
+ */
 void TimeSeriesDataset::addTimeSeries(const std::vector<double>& series) {
     std::vector<double> seriesCopy = series;
 
-    // Normalisation Z si activée
     if (znormalize) {
         zNormalizeSeries(seriesCopy);
     }
 
-    // Ajout au dataset
     data.push_back(seriesCopy);
 
-    // Mise à jour des métadonnées
     if (series.size() > static_cast<size_t>(maxLength)) {
         maxLength = series.size();
     }
     numberOfSamples++;
 }
 
-// Accesseurs
+/**
+ * Retrieves the time series data from the dataset.
+ *
+ * @return A constant reference to a vector of vectors, where each inner vector
+ *         represents a time series.
+ */
 const std::vector<std::vector<double>>& TimeSeriesDataset::getData() const {
     return data;
 }
 
+/**
+ * Retrieves the labels associated with the time series dataset.
+ *
+ * @return A constant reference to a vector of integers representing the labels.
+ */
 const std::vector<int>& TimeSeriesDataset::getLabels() const {
     return labels;
 }
 
-// Affichage des séries et labels
+/**
+ * Prints the time series dataset.
+ *
+ * For each series in the dataset, this method prints the series index and
+ * the data points it contains. If the dataset is a training set, the label
+ * associated with each series is also printed.
+ */
 void TimeSeriesDataset::printDataset() const {
     for (size_t i = 0; i < data.size(); ++i) {
         std::cout << "Série " << i + 1;
