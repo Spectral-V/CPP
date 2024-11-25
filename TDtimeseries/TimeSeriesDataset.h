@@ -26,8 +26,11 @@ public:
     // Constructeur
     TimeSeriesDataset(bool znormalize, bool isTrain);
 
-    // Ajout d'une série temporelle avec son label
+    // Ajout d'une série temporelle avec label (pour train)
     void addTimeSeries(const std::vector<double>& series, int label);
+
+    // Ajout d'une série temporelle sans label (pour test)
+    void addTimeSeries(const std::vector<double>& series);
 
     // Accesseurs
     const std::vector<std::vector<double>>& getData() const;

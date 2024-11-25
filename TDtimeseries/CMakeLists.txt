@@ -15,4 +15,6 @@ add_executable(TDtimeseries main.cpp
         TimeSeriesDataset.cpp
         TimeSeriesDataset.h
         DistanceMetrics.cpp
-        DistanceMetrics.h)
+        DistanceMetrics.h
+        KNN.cpp
+        KNN.h)

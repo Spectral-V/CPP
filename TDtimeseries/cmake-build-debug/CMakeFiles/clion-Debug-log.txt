@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/victormurris/Desktop/Cpp/TD/TDtimeseries -B /Users/victormurris/Desktop/Cpp/TD/TDtimeseries/cmake-build-debug
+/Applications/CLion.app/Contents/bin/cmake/mac/aarch64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/aarch64/ninja -G Ninja -S /Users/victormurris/Desktop/Cpp/TD/CPP/TDtimeseries -B /Users/victormurris/Desktop/Cpp/TD/CPP/TDtimeseries/cmake-build-debug
 -- Configuring done (0.0s)
 -- Generating done (0.0s)
--- Build files have been written to: /Users/victormurris/Desktop/Cpp/TD/TDtimeseries/cmake-build-debug
+-- Build files have been written to: /Users/victormurris/Desktop/Cpp/TD/CPP/TDtimeseries/cmake-build-debug

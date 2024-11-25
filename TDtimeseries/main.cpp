@@ -1,51 +1,46 @@
-#include <iostream>
-
-#include "DistanceMetrics.h"
+#include "TimeSeriesDataset.h"
 #include "GaussianGenerator.h"
 #include "SinWaveGenerator.h"
 #include "StepGenerator.h"
-#include "TimeSeriesDataset.h"
+#include "KNN.h"
+#include <iostream>
+
+using namespace std;
 
 int main() {
-    GaussianGenerator generator(42, 0.0, 1.0); // Seed = 42, Moyenne = 0, Ecart-type = 1
-    std::vector<double> series = generator.generateTimeSeries(10);
 
-    std::cout << "Serie temporelle gaussienne générée : " << std::endl;
-    TimeSeriesGenerator::printTimeSeries(series);
+    TimeSeriesDataset trainData(false, true);
+    TimeSeriesDataset testData(false, false);
 
-    StepGenerator generator2(42); // Graine aléatoire fixe pour reproductibilité
-    std::vector<double> series2 = generator2.generateTimeSeries(10);
+    GaussianGenerator gsg;
+    SinWaveGenerator swg;
+    StepGenerator stg;
 
-    std::cout << "Série temporelle de type 'Step' générée : " << std::endl;
-    TimeSeriesGenerator::printTimeSeries(series2);
-
-    SinWaveGenerator generator3(42, 2.0, 0.1, 0.0); // Amplitude = 2, Fréquence = 0.1, Phase = 0
-    std::vector<double> series3 = generator3.generateTimeSeries(10);
-
-    std::cout << "Série temporelle de type 'Sinus' générée : " << std::endl;
-    TimeSeriesGenerator::printTimeSeries(series3);
-
-    TimeSeriesDataset dataset(true, true);
-    GaussianGenerator generator4(42, 0.0, 1.0);
-    for (int i = 0; i < 3; ++i) {
-        auto series4 = generator4.generateTimeSeries(10);
-        dataset.addTimeSeries(series4, i % 2); // Alternance des labels 0 et 1
-    }
-    dataset.printDataset();
-
-    // Exemple de deux séries temporelles
-    std::vector<double> series5 = {1.0, 2.0, 3.0, 4.0, 5.0};
-    std::vector<double> series6 = {2.0, 3.0, 4.0, 5.0, 6.0};
-
-    try {
-        // Calcul de la distance euclidienne
-        double distance = DistanceMetrics::euclideanDistance(series5, series6);
-        std::cout << "Distance euclidienne : " << distance << std::endl;
-    } catch (const std::invalid_argument& e) {
-        std::cerr << "Erreur : " << e.what() << std::endl;
-    }
-
-    return 0;
+    vector<double> gaussian1 = gsg.generateTimeSeries(11);
+    trainData.addTimeSeries( gaussian1 , 0);
+    vector<double> gaussian2 = gsg.generateTimeSeries(11);
+    trainData.addTimeSeries( gaussian2 , 0);
+    vector <double> sin1 = swg.generateTimeSeries(11);
+    trainData.addTimeSeries(sin1 , 1);
+    vector<double> sin2 = swg.generateTimeSeries(11);
+    trainData.addTimeSeries(sin2 , 1);
+    vector<double> step1 = stg.generateTimeSeries(11) ;
+    trainData.addTimeSeries( step1 , 2);
+    vector<double> step2 = stg.generateTimeSeries(11) ;
+    trainData.addTimeSeries( step2 , 2);
+    vector<int> ground_truth ;
+    testData.addTimeSeries(gsg.generateTimeSeries(11));
+    ground_truth.push_back (0) ;
+    testData.addTimeSeries(swg.generateTimeSeries(11));
+    ground_truth.push_back (1) ;
+    testData.addTimeSeries( stg.generateTimeSeries(11));
+    ground_truth.push_back (2) ;
+    KNN knn_1 (1 , "dtw" ) ;
+    cout << knn_1 . evaluate ( trainData , testData , ground_truth ) << endl ;
+    KNN knn_2 (2 , "euclidean_distance" ) ;
+    cout << knn_2 . evaluate ( trainData , testData , ground_truth ) << endl ;
+    KNN knn_3 (3 , "euclidean_distance" ) ;
+    cout << knn_3 . evaluate ( trainData , testData , ground_truth ) << endl ;
 
     return 0;
 }

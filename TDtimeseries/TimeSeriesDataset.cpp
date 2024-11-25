@@ -1,7 +1,3 @@
-//
-// Created by victor murris on 20/11/2024.
-//
-
 #include "TimeSeriesDataset.h"
 
 // Constructeur
@@ -30,7 +26,7 @@ void TimeSeriesDataset::zNormalizeSeries(std::vector<double>& series) {
     }
 }
 
-// Ajout d'une série temporelle et de son label
+// Ajout d'une série temporelle avec label (train)
 void TimeSeriesDataset::addTimeSeries(const std::vector<double>& series, int label) {
     std::vector<double> seriesCopy = series;
 
@@ -42,6 +38,25 @@ void TimeSeriesDataset::addTimeSeries(const std::vector<double>& series, int lab
     // Ajout au dataset
     data.push_back(seriesCopy);
     labels.push_back(label);
+
+    // Mise à jour des métadonnées
+    if (series.size() > static_cast<size_t>(maxLength)) {
+        maxLength = series.size();
+    }
+    numberOfSamples++;
+}
+
+// Ajout d'une série temporelle sans label (test)
+void TimeSeriesDataset::addTimeSeries(const std::vector<double>& series) {
+    std::vector<double> seriesCopy = series;
+
+    // Normalisation Z si activée
+    if (znormalize) {
+        zNormalizeSeries(seriesCopy);
+    }
+
+    // Ajout au dataset
+    data.push_back(seriesCopy);
 
     // Mise à jour des métadonnées
     if (series.size() > static_cast<size_t>(maxLength)) {
@@ -62,11 +77,14 @@ const std::vector<int>& TimeSeriesDataset::getLabels() const {
 // Affichage des séries et labels
 void TimeSeriesDataset::printDataset() const {
     for (size_t i = 0; i < data.size(); ++i) {
-        std::cout << "Série " << i + 1 << " (label: " << labels[i] << "): ";
+        std::cout << "Série " << i + 1;
+        if (isTrain) {
+            std::cout << " (label: " << labels[i] << ")";
+        }
+        std::cout << ": ";
         for (double value : data[i]) {
             std::cout << value << " ";
         }
         std::cout << std::endl;
     }
 }
-
