@@ -1,0 +1,12 @@
+# ninja log v6
+16	437	1732095715247451280	CMakeFiles/TDtimeseries.dir/GaussianGenerator.cpp.o	efbf854325bd5ad
+664	786	1732096803806586478	TDtimeseries	fc83e9f8aebfde03
+5	466	1732095879324964344	CMakeFiles/TDtimeseries.dir/TimeSeriesGenerator.cpp.o	3c7d0904ef769ad9
+9	634	1732096803151864443	CMakeFiles/TDtimeseries.dir/main.cpp.o	335b2dbebc959007
+6	515	1732095999979423596	CMakeFiles/TDtimeseries.dir/StepGenerator.cpp.o	b42a1ecccb0cda87
+8	462	1732096309732548703	CMakeFiles/TDtimeseries.dir/SinWaveGenerator.cpp.o	c2591795d5057bbf
+10	664	1732096803152572813	CMakeFiles/TDtimeseries.dir/TimeSeriesDataset.cpp.o	d1ed47cfc6e39c01
+9	481	1732099497418375705	CMakeFiles/TDtimeseries.dir/DistanceMetrics.cpp.o	a655ec49cf34b9e4
+9	539	1732099497418195206	CMakeFiles/TDtimeseries.dir/GaussianGenerator.cpp.o	efbf854325bd5ad
+5	392	1732099504800688096	CMakeFiles/TDtimeseries.dir/main.cpp.o	335b2dbebc959007
+393	516	1732099505188116238	TDtimeseries	68eb88b011578699
