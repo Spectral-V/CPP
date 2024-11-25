@@ -1,4 +1,4 @@
-# Install script for directory: /Users/victormurris/Desktop/Cpp/TD/TDpokemon
+# Install script for directory: /Users/victormurris/Desktop/Cpp/TD/CPP/TDpokemon
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/victormurris/Desktop/Cpp/TD/TDpokemon/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/victormurris/Desktop/Cpp/TD/CPP/TDpokemon/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

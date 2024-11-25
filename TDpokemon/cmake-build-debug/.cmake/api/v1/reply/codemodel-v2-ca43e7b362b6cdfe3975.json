@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/victormurris/Desktop/Cpp/TD/TDpokemon/cmake-build-debug",
-		"source" : "/Users/victormurris/Desktop/Cpp/TD/TDpokemon"
+		"build" : "/Users/victormurris/Desktop/Cpp/TD/CPP/TDpokemon/cmake-build-debug",
+		"source" : "/Users/victormurris/Desktop/Cpp/TD/CPP/TDpokemon"
 	},
 	"version" : 
 	{

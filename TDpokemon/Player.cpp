@@ -9,13 +9,34 @@
 #include "EnergyCard.h"
 #include "TrainerCard.h"
 
+/**
+ * @brief Constructs a Player object with the specified player name.
+ *
+ * This constructor initializes a Player object and sets the player's name.
+ *
+ * @param playerName The name of the player.
+ * @return A new instance of the Player class.
+ */
 Player::Player(std::string playerName)
     : playerName(playerName) {}
 
+/**
+ * @brief Adds a card to the player's bench.
+ *
+ * This method places the given card into the player's bench,
+ * making it available for future actions.
+ *
+ * @param card Pointer to the Card object to be added to the bench.
+ */
 void Player::addCardToBench(Card *card) {
     benchCards.push_back(card);
 }
 
+/**
+ * Activates a Pokémon card from the player's bench and moves it to the action card collection.
+ *
+ * @param index The index of the Pokémon card on the bench to be activated.
+ */
 void Player::activatePokemonCard(int index) {
     if (dynamic_cast<PokemonCard *> (benchCards[index]) != nullptr) {
         actionCards.push_back( dynamic_cast<PokemonCard *> (benchCards[index]) );
@@ -27,6 +48,13 @@ void Player::activatePokemonCard(int index) {
     }
 
 }
+
+/**
+ * Attach an EnergyCard from the player's bench to a Pokémon card in actionCards.
+ *
+ * @param indexBench The index of the EnergyCard in benchCards that will be attached.
+ * @param indexAction The index of the Pokémon card in actionCards to which the EnergyCard will be attached.
+ */
 void Player::attachEnergyCard(int indexBench, int indexAction) {
     // Check if the card at the specified index in benchCards is an EnergyCard
     EnergyCard* energyCard = dynamic_cast<EnergyCard*>(benchCards[indexBench]);
@@ -50,6 +78,12 @@ void Player::attachEnergyCard(int indexBench, int indexAction) {
 }
 
 
+/**
+ * @brief Displays the current bench of cards for the player.
+ *
+ * This method outputs the list of bench cards for the player to the standard output.
+ * For each card in the bench, its information is displayed using the card's displayInfo() method.
+ */
 void Player::displayBench() {
     std::cout << "Bench cards for player " << playerName << " : "<< "\n";
     for (int i = 0; i < benchCards.size(); i++) {
@@ -57,6 +91,13 @@ void Player::displayBench() {
     }
 }
 
+/**
+ * @brief Display the action cards of the player.
+ *
+ * This method prints the action cards held by the player to the standard output.
+ * It outputs the player's name followed by a list of action cards, with each card's
+ * detailed information displayed by invoking their displayInfo() method.
+ */
 void Player::displayAction() {
     std::cout << "Action cards for player " << playerName << " : "<< "\n";
     for (int i = 0; i < actionCards.size(); i++) {
@@ -64,6 +105,14 @@ void Player::displayAction() {
     }
 }
 
+/**
+ * Executes an attack from the current player's action card to an opponent's action card.
+ *
+ * @param indexAction Index of the action card of the current player that initiates the attack.
+ * @param indexAttack Index of the specific attack within the chosen action card.
+ * @param opponent The opponent player who will be attacked.
+ * @param indexOpponentAction Index of the action card of the opponent that will be targeted.
+ */
 void Player::attack(int indexAction, int indexAttack, Player opponent, int indexOpponentAction) {
     switch (actionCards.at(indexAction)->getattacksize()) {
         case 0:
@@ -97,6 +146,15 @@ void Player::attack(int indexAction, int indexAttack, Player opponent, int index
 
 }
 
+/**
+ * @brief Uses a trainer card from the player's bench.
+ *
+ * This function performs the action associated with the trainer card located at the specified index
+ * in the player's bench. The function outputs the player's name and the trainer card's effect.
+ * Additionally, it restores the HP of all the action cards to their maximum value.
+ *
+ * @param indexTrainer The index of the trainer card in the benchCards vector to be used.
+ */
 void Player::useTrainer(int indexTrainer) {
     TrainerCard* trainerCard = dynamic_cast<TrainerCard*>(benchCards[indexTrainer]);
     if (trainerCard != nullptr) {
